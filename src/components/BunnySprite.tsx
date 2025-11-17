@@ -4,15 +4,19 @@ import {
 } from 'pixi.js';
 import {
     useEffect,
-    useRef,
     useState,
 } from 'react';
 
-export function BunnySprite() {
-    const spriteRef = useRef(null)
+interface BunnySpriteProps {
+    onClick?: () => void;
+    scale?: number;
+    x: number;
+    y: number;
+    rotation?: number;
+}
 
-    const [texture, setTexture] = useState(Texture.EMPTY)
-    const [isActive, setIsActive] = useState(false)
+export function BunnySprite({ onClick, scale = 1, x, y, rotation = 0 }: BunnySpriteProps) {
+    const [texture, setTexture] = useState(Texture.EMPTY);
 
     useEffect(() => {
         if (texture === Texture.EMPTY) {
@@ -26,13 +30,13 @@ export function BunnySprite() {
 
     return (
         <pixiSprite
-            ref={spriteRef}
             anchor={0.5}
             eventMode={'static'}
-            onClick={() => setIsActive(!isActive)}
-            scale={isActive ? 1 : 1.5}
+            onClick={onClick}
+            scale={scale}
             texture={texture}
-            x={100}
-            y={100} />
+            x={x}
+            y={y}
+            rotation={rotation} />
     );
 }
