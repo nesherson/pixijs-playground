@@ -1,5 +1,6 @@
 import {
     Assets,
+    TextStyle,
     Texture,
 } from 'pixi.js';
 import {
@@ -13,9 +14,10 @@ interface BunnySpriteProps {
     x: number;
     y: number;
     rotation?: number;
+    name: string;
 }
 
-export function BunnySprite({ onClick, scale = 1, x, y, rotation = 0 }: BunnySpriteProps) {
+export function BunnySprite({ onClick, scale = 1.25, x, y, rotation = 0, name }: BunnySpriteProps) {
     const [texture, setTexture] = useState(Texture.EMPTY);
 
     useEffect(() => {
@@ -29,14 +31,25 @@ export function BunnySprite({ onClick, scale = 1, x, y, rotation = 0 }: BunnySpr
     }, [texture]);
 
     return (
-        <pixiSprite
-            anchor={0.5}
-            eventMode={'static'}
-            onClick={onClick}
-            scale={scale}
-            texture={texture}
-            x={x}
-            y={y}
-            rotation={rotation} />
+        <pixiContainer>
+            <pixiText
+                anchor={0.5}
+                text={name}
+                style={new TextStyle({
+                    fill: '#ffffff',
+                    fontSize: 12
+                })}
+                x={x}
+                y={y - 30 * scale} />
+            <pixiSprite
+                anchor={0.5}
+                eventMode={'static'}
+                onClick={onClick}
+                scale={scale}
+                texture={texture}
+                x={x}
+                y={y}
+                rotation={rotation} />
+        </pixiContainer>
     );
 }
