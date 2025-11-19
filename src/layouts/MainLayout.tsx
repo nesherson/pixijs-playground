@@ -33,7 +33,7 @@ export default function MainLayout() {
             <main className="flex-1 overflow-y-auto relative">
                 <header className="bg-white h-16 border-b border-slate-200 flex items-center px-6 sticky top-0 z-10">
                     <span className="text-sm font-medium text-slate-500">
-                        Application / {location.pathname === '/' ? 'Home' : location.pathname.slice(1)}
+                        Application / {location.pathname === '/' ? 'Getting started' : location.pathname.slice(1)}
                     </span>
                 </header>
 
