@@ -1,7 +1,23 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { paths, type RouteKeys } from '../config/paths';
 
-export default function MainLayout() {
+interface SideNavigationItem {
+    name: string;
+    to: string;
+};
+
+export default function MainLayout({ children }: { children: React.ReactNode }) {
     const location = useLocation();
+    console.log(location);
+
+    const navigation = Object.keys(paths).map(key => {
+        const routeKey = key as RouteKeys;
+
+        return {
+            name: paths[routeKey].name,
+            to: paths[routeKey].getHref()
+        };
+    }) as SideNavigationItem[];
 
     const getLinkClass = (path: string) => {
         const baseClass = "block px-4 py-3 rounded-lg transition-colors duration-200";
@@ -21,24 +37,25 @@ export default function MainLayout() {
                 </div>
 
                 <nav className="flex-1 px-4 py-6 space-y-2">
-                    <Link to="/" className={getLinkClass('/')}>
-                        Getting started
-                    </Link>
-                    <Link to="/test" className={getLinkClass('/test')}>
-                        Test Page
-                    </Link>
+                    {navigation.map(n => {
+                        return (
+                            <Link key={n.name} to={n.to} className={getLinkClass(n.to)}>
+                                {n.name}
+                            </Link>
+                        );
+                    })}
                 </nav>
             </aside>
 
             <main className="flex-1 overflow-y-auto relative">
                 <header className="bg-white h-16 border-b border-slate-200 flex items-center px-6 sticky top-0 z-10">
-                    <span className="text-sm font-medium text-slate-500">
-                        Application / {location.pathname === '/' ? 'Getting started' : location.pathname.slice(1)}
+                     <span className="text-sm font-medium text-slate-500">
+                        Application / {navigation.find(n => n.to === location.pathname)?.name}
                     </span>
                 </header>
 
                 <div className="max-w-7xl mx-auto">
-                    <Outlet />
+                    {children}
                 </div>
             </main>
         </div>
