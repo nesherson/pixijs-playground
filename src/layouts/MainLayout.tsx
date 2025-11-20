@@ -8,8 +8,7 @@ interface SideNavigationItem {
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
     const location = useLocation();
-    console.log(location);
-
+    
     const navigation = Object.keys(paths).map(key => {
         const routeKey = key as RouteKeys;
 
