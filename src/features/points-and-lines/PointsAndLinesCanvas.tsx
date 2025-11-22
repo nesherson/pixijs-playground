@@ -18,7 +18,7 @@ interface Line {
     endPos: Point;
 }
 
-export function TestCanvas() {
+export function PointsAndLinesCanvas() {
     useExtend({ Container, Graphics, Sprite, Text });
     const canvasWidth = 1200;
     const canvasHeight = 720;

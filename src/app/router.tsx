@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router/dom';
 import { paths } from '../config/paths';
 import Home from './routes/app/home';
 import AppRoot from './routes/app/root';
-import Test from './routes/app/test';
+import Test from './routes/app/points-and-lines';
 
 const createAppRouter = () =>
     createBrowserRouter([
@@ -19,7 +19,7 @@ const createAppRouter = () =>
                     Component: Home
                 },
                 {
-                    path: paths.test.path,
+                    path: paths.pointsAndLines.path,
                     Component: Test
                 }
             ],
