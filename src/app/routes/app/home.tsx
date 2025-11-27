@@ -9,7 +9,7 @@ import {
     Text
 } from 'pixi.js';
 
-import { GettingStartedStage } from '../../../features/getting-started/components/GettingStartedStage';
+import { GettingStartedStage } from '../../../features/home/components/GettingStartedStage';
 import { useState } from 'react';
 
 export default function Home() {

@@ -4,10 +4,10 @@ export const paths = {
     path: "/",
     getHref: () => "/",
   },
-  test: {
-    name: "Test",
-    path: "/test",
-    getHref: () => "/test",
+  pointsAndLines: {
+    name: "Points and lines",
+    path: "/points-and-lines",
+    getHref: () => "/points-and-lines",
   },
 } as const;
 
