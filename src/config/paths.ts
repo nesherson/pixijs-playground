@@ -9,6 +9,11 @@ export const paths = {
     path: "/points-and-lines",
     getHref: () => "/points-and-lines",
   },
+   coordinatePlane: {
+    name: "Coordinate plane",
+    path: "/coordiante-plane",
+    getHref: () => "/coordiante-plane",
+  },
 } as const;
 
 export type RouteKeys = keyof typeof paths;
