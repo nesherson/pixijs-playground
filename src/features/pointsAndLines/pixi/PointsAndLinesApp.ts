@@ -1,14 +1,8 @@
-import {
-  Application,
-  FederatedPointerEvent,
-  Graphics,
-  Rectangle,
-  TextStyle,
-  Text,
-  Container,
-} from "pixi.js";
+import { Application, FederatedPointerEvent, Point, Rectangle } from "pixi.js";
 
 import { PointNode } from "./PointNode";
+import { ButtonNode } from "./ButtonNode";
+import { StraightLineNode } from "./StraightLineNode";
 
 export class PointsAndLinesApp {
   public app: Application;
@@ -24,6 +18,7 @@ export class PointsAndLinesApp {
       background: "#ecf0f1",
       width: 1200,
       height: 820,
+      antialias: true,
     });
 
     this.app.stage.eventMode = "static";
@@ -39,27 +34,28 @@ export class PointsAndLinesApp {
   }
 
   private addButtons = () => {
-    const drawStraighLinesBtnContainer = new Container();
-    const drawStraightLinesBtn = new Graphics()
-      .roundRect(0, 0, 120, 35, 5)
-      .fill("#6da2f7");
-    const drawStraightLinesBtnText = new Text({
-      text: "Draw straight",
-      style: new TextStyle({ fontSize: 14 }),
-    });
+    const drawStraightLinesBtn = new ButtonNode(
+      20,
+      10,
+      120,
+      40,
+      5,
+      "Draw straight"
+    );
 
-    drawStraighLinesBtnContainer.x = 20;
-    drawStraighLinesBtnContainer.y = 10;
-    drawStraightLinesBtnText.x = 10;
-    drawStraightLinesBtnText.y = 10;
+    const selectAllPointsBtn = new ButtonNode(
+      160,
+      10,
+      120,
+      40,
+      5,
+      "Select all"
+    );
 
-    drawStraightLinesBtn.eventMode = "static";
-    drawStraightLinesBtn.cursor = "pointer";
+    drawStraightLinesBtn.on("click", this.onDrawStraightLinesBtnClick);
+    selectAllPointsBtn.on("click", this.selectAllPoints);
 
-    drawStraighLinesBtnContainer.addChild(drawStraightLinesBtn);
-    drawStraighLinesBtnContainer.addChild(drawStraightLinesBtnText);
-
-    this.app.stage.addChild(drawStraighLinesBtnContainer);
+    this.app.stage.addChild(drawStraightLinesBtn, selectAllPointsBtn);
   };
 
   private onStageClick = (e: FederatedPointerEvent) => {
@@ -85,5 +81,48 @@ export class PointsAndLinesApp {
     } else {
       this.selectedPoints.delete(point);
     }
+  };
+
+  private deselectSelectedPoints = () => {
+    this.selectedPoints.forEach((sp) => {
+      sp.toggleSelection();
+    });
+
+    this.selectedPoints.clear();
+  };
+
+  private selectAllPoints = () => {
+    const pointsToSelect = this.app.stage.getChildrenByLabel(
+      "point-node"
+    ) as PointNode[];
+    console.log(
+      "🚀 ~ PointsAndLinesApp ~ selectAllPoints ~ pointsToSelect:",
+      pointsToSelect
+    );
+
+    if (pointsToSelect.length === 0) return;
+
+    pointsToSelect.forEach((p) => {
+      p.toggleSelection();
+      this.selectedPoints.add(p);
+    });
+  };
+
+  private onDrawStraightLinesBtnClick = () => {
+    const selectedPoints = Array.from(this.selectedPoints);
+    if (selectedPoints.length < 1) return;
+
+    for (let i = 0; i < selectedPoints.length; i++) {
+      if (!selectedPoints[i + 1]) break;
+
+      const newLine = new StraightLineNode(
+        new Point(selectedPoints[i].x, selectedPoints[i].y),
+        new Point(selectedPoints[i + 1].x, selectedPoints[i + 1].y)
+      );
+
+      this.app.stage.addChild(newLine);
+    }
+
+    this.deselectSelectedPoints();
   };
 }

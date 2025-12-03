@@ -9,15 +9,16 @@ export class PointNode extends Graphics {
     this.x = x;
     this.y = y;
     this.eventMode = "static";
+    this.label = "point-node";
 
     this.draw();
   }
 
   public draw() {
     this.clear();
-    
+
     const color = this.isSelected ? "#00ff00" : "#ff4d4d";
-    
+
     this.circle(0, 0, this.radius);
     this.fill(color);
   }
