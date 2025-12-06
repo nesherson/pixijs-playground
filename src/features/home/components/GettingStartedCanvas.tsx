@@ -6,6 +6,8 @@ export function GettingStartedCanvas() {
   const pixiContainerRef = useRef<HTMLDivElement>(null);
   const [app, setApp] = useState<GettingStartedApp | null>(null);
   useApp(pixiContainerRef, GettingStartedApp, (app) => {
+    console.log("setApp(app)");
+
     setApp(app);
   });
 

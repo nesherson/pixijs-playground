@@ -7,40 +7,35 @@ export function useApp<TApp extends IPixiApp>(
   onAppReady?: (app: TApp) => void,
 ) {
   const appRef = useRef<TApp | null>(null);
-  const isInializingRef = useRef(false);
 
   useEffect(() => {
+    console.log(appRef.current);
+
     const container = containerRef.current;
 
     if (!container) return;
-    if (appRef.current) return;
 
-    const app = new AppClass();
+    if (!appRef.current || appRef.current?.isInitialized === false) {
+      const app = new AppClass();
 
-    appRef.current = app;
+      appRef.current = app;
 
-    const initApp = async () => {
-      try {
-        isInializingRef.current = true;
-
+      const initApp = async () => {
         await app.init();
-
         container?.appendChild(app.canvas);
-        if (onAppReady) onAppReady(app);
-      } catch (err) {
-        console.error("Pixi initialization failed", err);
-      } finally {
-        isInializingRef.current = false;
-      }
-    };
 
-    initApp();
+        if (onAppReady) {
+          console.log("onAppReady");
+          onAppReady(app);
+        }
+      };
+
+      initApp();
+    }
 
     return () => {
-      if (appRef.current && !isInializingRef.current) {
-        if (container.contains(appRef.current.canvas)) {
-          container.removeChild(appRef.current.canvas);
-        }
+      if (appRef.current?.isInitialized === true) {
+        console.log("useEffect cleanup ", appRef.current);
 
         appRef.current.destroy();
         appRef.current = null;

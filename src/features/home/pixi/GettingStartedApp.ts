@@ -9,10 +9,10 @@ import {
   TextStyle,
   Application,
 } from "pixi.js";
-import { type IPixiApp } from "../../../types/app";
+import { PixiApplication, type IPixiApp } from "../../../types/app";
 
 export class GettingStartedApp implements IPixiApp {
-  public app: Application;
+  public app: PixiApplication;
   private bunnyTwoMoveSpeed = 1;
   private bunnyTwoDirection = 1;
   private bunnyThreeRotationSpeed = 0.1;
@@ -25,15 +25,23 @@ export class GettingStartedApp implements IPixiApp {
   private bunnyFour!: Container;
 
   constructor() {
-    this.app = new Application();
+    this.app = new PixiApplication();
   }
 
   get canvas() {
     return this.app.canvas as HTMLCanvasElement;
   }
 
+  get isInitializing() {
+    return this.app.isInitializing;
+  }
+
+  get isInitialized() {
+    return this.app.isInitialized;
+  }
+
   async init() {
-    await this.app.init({
+    await this.app.initialize({
       background: "#1099bb",
       width: 800,
       height: 600,
