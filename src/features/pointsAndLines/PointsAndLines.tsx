@@ -1,4 +1,4 @@
-import { PixiCanvas } from "../pixiCanvas/PixiCanvas";
+import { PixiCanvas } from "../pixiCanvas";
 import { PointsAndLinesApp } from "./pixi/PointsAndLinesApp";
 
 export function PointsAndLines() {

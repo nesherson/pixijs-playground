@@ -31,7 +31,7 @@ export class GettingStartedApp implements IPixiApplication<GettingStartedAppUpda
   private bunnyThree!: Container;
   private bunnyFour!: Container;
 
-  constructor(container: HTMLDivElement, updateProps: GettingStartedAppUpdateProps) {
+  constructor(container: HTMLDivElement) {
     this.app = new Application();
     this.container = container;
   }

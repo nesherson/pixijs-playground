@@ -6,7 +6,7 @@ import { PointNode } from "./PointNode";
 import { RectangleNode } from "./RectangleNode";
 import { StraightLineNode } from "./StraightLineNode";
 import { isInArea } from "./utils";
-import type { IPixiApplication } from "../../pixiCanvas/types";
+import type { IPixiApplication } from "../../pixiCanvas";
 
 export class PointsAndLinesApp implements IPixiApplication {
   public app: Application;

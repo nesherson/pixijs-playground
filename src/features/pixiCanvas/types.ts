@@ -7,4 +7,4 @@ export interface IPixiApplication<T = undefined> {
 export type PixiApplicationConstructor<T = undefined> = new (
   container: HTMLDivElement,
   updateProps?: T,
-) => IPixiApplication;
+) => IPixiApplication<T>;

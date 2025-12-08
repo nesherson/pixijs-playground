@@ -9,7 +9,11 @@ type PixiCanvasProps<T> = BaseProps & {
   applicationClass: PixiApplicationConstructor<T>;
 } & (T extends undefined ? { updateProps?: never } : { updateProps: T });
 
-export const PixiCanvas = <T,>({ applicationClass: Application, updateProps, className }: PixiCanvasProps<T>) => {
+export function PixiCanvas<T = undefined>({
+  applicationClass: Application,
+  updateProps,
+  className,
+}: PixiCanvasProps<T>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<IPixiApplication<T> | null>(null);
   const isInitializingRef = useRef(false);
@@ -50,4 +54,4 @@ export const PixiCanvas = <T,>({ applicationClass: Application, updateProps, cla
   }, [updateProps]);
 
   return <div ref={containerRef} className={className} style={{ width: "100%", height: "100%" }} />;
-};
+}
