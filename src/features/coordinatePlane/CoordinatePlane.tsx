@@ -87,39 +87,8 @@
 import { useEffect, useRef } from "react";
 
 import { CoordinatePlaneApp } from "./pixi/CoordinatePlaneApp";
+import { PixiCanvas } from "../pixiCanvas";
 
-export function CoordinatePlaneCanvas() {
-  const pixiContainerRef = useRef<HTMLDivElement>(null);
-  const appRef = useRef<CoordinatePlaneApp>(null);
-  const isInitializingRef = useRef(false);
-
-  useEffect(() => {
-    const initApp = async () => {
-      if (isInitializingRef.current) return;
-
-      const application = new CoordinatePlaneApp();
-
-      appRef.current = application;
-
-      try {
-        isInitializingRef.current = true;
-
-        await application.init();
-
-        if (pixiContainerRef.current) {
-          pixiContainerRef.current.appendChild(application.app.canvas);
-        }
-      } finally {
-        isInitializingRef.current = false;
-      }
-    };
-
-    initApp();
-  }, []);
-
-  return (
-    <>
-      <div ref={pixiContainerRef} />
-    </>
-  );
+export function CoordinatePlane() {
+  return <PixiCanvas applicationClass={CoordinatePlaneApp} />;
 }

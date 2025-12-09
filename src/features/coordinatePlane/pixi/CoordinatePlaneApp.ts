@@ -1,15 +1,18 @@
 import { Application, Assets, Container, FederatedPointerEvent, FederatedWheelEvent, Graphics, Sprite } from "pixi.js";
+import type { IPixiApplication } from "../../pixiCanvas";
 
-export class CoordinatePlaneApp {
+export class CoordinatePlaneApp implements IPixiApplication {
   public app: Application;
 
+  private container: HTMLDivElement;
   private zoomFactor = 1.05;
   private world: Container;
   private isDragging: boolean = false;
   private lastPos: { x: number; y: number } = { x: 0, y: 0 };
 
-  constructor() {
+  constructor(container: HTMLDivElement) {
     this.app = new Application();
+    this.container = container;
     this.world = new Container();
   }
 
@@ -20,6 +23,9 @@ export class CoordinatePlaneApp {
       height: 820,
       antialias: true,
     });
+
+    this.container.appendChild(this.app.canvas);
+
     const texture = await Assets.load("https://pixijs.com/assets/bunny.png");
 
     this.app.stage.eventMode = "static";
@@ -47,6 +53,10 @@ export class CoordinatePlaneApp {
 
     this.world.addChild(centerPoint, spriteOne, spriteTwo);
     this.app.stage.addChild(this.world);
+  }
+
+  destroy() {
+    this.app.destroy(true, { children: true });
   }
 
   private stagePointerDown = (e: FederatedPointerEvent) => {
