@@ -83,11 +83,11 @@ export class CoordinatePlaneApp implements IPixiApplication {
     this.lastPos = currentPos;
   };
 
-  private stagePointerUp = (e: FederatedPointerEvent) => {
+  private stagePointerUp = () => {
     this.isDragging = false;
   };
 
-  private stagePointerUpOutside = (e: FederatedPointerEvent) => {
+  private stagePointerUpOutside = () => {
     this.isDragging = false;
   };
 
