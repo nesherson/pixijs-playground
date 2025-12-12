@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { paths, type RouteKeys } from "../config/paths";
+import { paths, type RouteKeys } from "@/config/paths";
 
 interface SideNavigationItem {
   name: string;
