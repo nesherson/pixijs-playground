@@ -5,6 +5,7 @@ import { paths } from '@/config/paths';
 import Home from './routes/app/home';
 import AppRoot from './routes/app/root';
 import PointsAndLines from './routes/app/points-and-lines';
+import { CoordinatePlane } from '@/features/coordinatePlane/CoordinatePlane';
 
 const createAppRouter = () =>
   createBrowserRouter([
@@ -19,6 +20,10 @@ const createAppRouter = () =>
         {
           path: paths.pointsAndLines.path,
           Component: PointsAndLines,
+        },
+        {
+          path: paths.coordinatePlane.path,
+          Component: CoordinatePlane,
         },
       ],
     },
